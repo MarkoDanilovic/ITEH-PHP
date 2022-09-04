@@ -11,7 +11,7 @@
 <body>
     
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-  <a class="navbar-brand" href="#">ITEH2021/22</a>
+  <a class="navbar-type" href="#">ITEH2021/22</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -146,7 +146,151 @@
 
 
 <script type="text/javascript">
+    $(document).ready(function(){
+        
 
+        showAllUsers();
+
+        function showAllUsers(){
+            $.ajax({
+                url: "action.php",
+                type:"POST",
+                data:{action:"view"},
+                success:function(response){
+                    //console.log(response);
+                    $("#showUser").html(response);
+                    $("table").DataTable({
+                        order:[0,'desc']
+                    });
+                }
+            });
+        }
+
+        $("#insert").click(function(e){
+            if($("#form-data")[0].checkValidity()){
+                e.preventDefault();
+                $.ajax({
+                    url:"action.php",
+                    type:"POST",
+                    data: $("#form-data").serialize() + "&action=insert",
+                    success:function(response){
+                        Swal.fire({
+                            title: 'Uspesno dodat korisnik!',
+                            type: 'success'
+                        })
+                        $("#addModal").modal('hide');
+                        $("#form-data")[0].reset();
+                        showAllUsers();
+                    }
+                });
+            }
+        });
+
+        $("body").on("click",".editBtn",function(e){
+
+            e.preventDefault();
+
+            edit_id = $(this).attr('id');
+            $.ajax({
+                url:"action.php",
+                type:"POST",
+                data:{edit_id:edit_id},
+                success:function(response){
+                    
+                    data = JSON.parse(response);
+
+                    console.log(data)
+
+                    $("#id").val(data.id);
+                    $("#fname").val(data.first_name);
+                    $("#lname").val(data.last_name);
+                    $("#email").val(data.email);
+                    $("#room").val(data.room);
+                }
+            });
+
+        });
+
+        $("#update").click(function(e){
+            if($("#edit-form-data")[0].checkValidity()){
+                e.preventDefault();
+                $.ajax({
+                    url:"action.php",
+                    type:"POST",
+                    data: $("#edit-form-data").serialize() + "&action=update",
+                    success:function(response){
+                        Swal.fire({
+                            title: 'User updated successfully!',
+                            type: 'success'
+                        })
+                        $("#editModal").modal('hide');
+                        $("#edit-form-data")[0].reset();
+                        showAllUsers();
+                    }
+                });
+            }
+        });
+
+
+        $("body").on("click",".delBtn",function(e){
+            e.preventDefault();
+
+            var tr = $(this).closest('tr');
+            del_id = $(this).attr('id');
+
+            Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+
+                $.ajax({
+                    url:"action.php",
+                    type:"POST",
+                    data:{del_id:del_id},
+                    success:function(response){
+                        Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                        )
+
+                        showAllUsers();
+                    }
+                }) 
+            }
+            });
+
+        });
+
+
+        $("body").on("click",".infoBtn",function(e){
+            e.preventDefault();
+            info_id = $(this).attr('id');
+            //console.log(info_id);
+            $.ajax({
+                url:"action.php",
+                type: "POST",
+                data:{info_id:info_id},
+                success:function(response){
+                  console.log(response)
+                   data = JSON.parse(response)
+                   Swal.fire({
+                       title:'<strong>User Info</strong>',
+                       type: 'info',
+                       html: '<b>First Name: </b>' + data.first_name + '<br> <b> Last Name: </b>' + data.last_name + 
+                       '<br> <b> Email: </b>' + data.email + '<br> <b> Room: </b>' + data.type,
+                   })
+                }
+            });
+        });
+
+    });
 </script>
 </body>
 </html>

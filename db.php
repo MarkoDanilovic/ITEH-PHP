@@ -54,7 +54,7 @@ class Database{
     }
 
     public function getUserDetails($id){
-        $sql="SELECT u.first_name,u.last_name,u.email,c.brand FROM users u INNER JOIN rooms c ON u.room = c.room WHERE id= :id";
+        $sql="SELECT u.first_name,u.last_name,u.email,c.type FROM users u INNER JOIN rooms c ON u.room = c.room WHERE id= :id";
         
         $stmt = $this->conn->prepare($sql);
         $stmt->execute(['id'=>$id]);

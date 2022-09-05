@@ -98,7 +98,9 @@ if(isset($_POST['del_id'])){
 if(isset($_POST['info_id'])){
     $id = $_POST['info_id'];
     $row = $db->getUserDetails($id);
-
+    
+    //echo $row;
+    
     echo json_encode($row);
 
 }

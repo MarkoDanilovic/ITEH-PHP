@@ -54,13 +54,16 @@ class Database{
     }
 
     public function getUserDetails($id){
-        $sql="SELECT u.first_name,u.last_name,u.email,r.category FROM users u INNER JOIN rooms r ON u.room = r.room WHERE id= :id";
+        $sql="SELECT u.first_name,u.last_name,u.email,r.category FROM users u INNER JOIN rooms r ON u.room = r.id WHERE u.id= :id";
         
+        
+
         $stmt = $this->conn->prepare($sql);
         $stmt->execute(['id'=>$id]);
-
+        
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
+        //echo $result;
+        
 
         return $result;
     }

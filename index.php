@@ -10,8 +10,8 @@
 </head>
 <body>
     
-<nav class="navbar navbar-expand-md bg-dark navbar-dark">
-  <a class="navbar-type" href="#">ITEH2021/22</a>
+<nav class="navbar navbar-expand-md bg-info navbar-dark">
+  <a class="navbar-type" href="#" style="color: black"><b>ITEH2021/22</b></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -19,7 +19,7 @@
     <ul class="navbar-nav">
       <li class="nav-item">
         <button type="button" class="btn btn-dark m-1 float-right" data-toggle="modal" data-target="#addModal">
-                Novi Korisnik
+                <b>Novi Korisnik</b>
         </button>
       </li>
     </ul>
@@ -284,7 +284,7 @@
                        title:'<strong>User Info</strong>',
                        type: 'info',
                        html: '<b>First Name: </b>' + data.first_name + '<br> <b> Last Name: </b>' + data.last_name + 
-                       '<br> <b> Email: </b>' + data.email + '<br> <b> Room: </b>' + data.type,
+                       '<br> <b> Email: </b>' + data.email + '<br> <b> Room: </b>' + data.category,
                    })
                 }
             });

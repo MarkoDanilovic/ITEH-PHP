@@ -62,7 +62,6 @@ class Database{
         $stmt->execute(['id'=>$id]);
         
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        //echo $result;
         
 
         return $result;

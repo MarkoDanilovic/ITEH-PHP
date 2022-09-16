@@ -272,7 +272,6 @@
         $("body").on("click",".infoBtn",function(e){
             e.preventDefault();
             info_id = $(this).attr('id');
-            //console.log(info_id);
             console.log(info_id);
             $.ajax({
                 url:"action.php",
